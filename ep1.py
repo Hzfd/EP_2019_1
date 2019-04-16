@@ -82,20 +82,20 @@ def main():
                 print("Sua indecisão foi sua ruína!")
                 game_over = True
 
-    print("Você morreu!")
+                print("Você morreu!")
 
 
 # Programa principal.
     
-if __name__ == "__main__":
-    main()
-if escolha=='biblioteca': 
-    print(cenario_atual['blibioteca'])
-    print('--------------------------------------------')
-    print(cenario_atual['biblioteca'])
+            if __name__ == "__main__":
+                main()
+            if escolha=='biblioteca': 
+                print(cenario_atual['blibioteca'])
+                print('--------------------------------------------')
+                print(cenario_atual['biblioteca'])
            
-elif escolha=='andar professor':
-    print(cenario_atual['andar professor'])
+            elif escolha=='andar professor':
+                print(cenario_atual['andar professor'])
                 
     
     
