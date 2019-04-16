@@ -19,7 +19,8 @@ def carregar_cenarios():
             "descricao": "Voce chegou ao andar da sala do seu professor",
             "opcoes": {
                 "inicio": "Tomar o elevador para o saguao de entrada",
-                "professor": "Falar com o professor"
+                "professor": "Falar com o professor",
+                "explorar":"você explora o andar"
             }
         },
         "professor": {
@@ -58,8 +59,59 @@ def carregar_cenarios():
                 "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão, você pega a chave",
                 "opcoes":{
                         "inicio":"voltar ao saguão de entrada"
-            }           
-        }
+            }
+        },
+        "explorar":{
+                "titulo":"o monstro do andar",
+                "descricao":"você esta andando tranquilamente até que um estrondo te assusta, sua visão se turva e ao recobrar os sentindos você se depara com um monstro,se ele te acertar 3 vezes é o seu fim, SUA VIDA ESTÁ EM JOGO!!!",
+                "opcoes":{
+                          "pular da janela":"é uma decisão arriscada, porém seu desespero é maior",
+                          "correr de volta para o saguão":"você está com medo e decide correr de volta ao saguão",
+                          "enfrentar o monstro":"você tira coragem de algum lugar e decide enfrentar o mostro à sua frente"
+            } 
+        },
+        "pular da janela":{
+                "titulo":"você decidiu pular da janela",
+                "descricao":"você corre, passa pelo monstro e pula da janela numa tentativa de se salvar, porém a queda, apesar de pequena, foi fatal",
+                "opcoes":{}       
+        },
+        "correr de volta para o saguão":{
+                "titulo":"Corre irmão",
+                "descricao":"você fica com medo e corre o mais rapido que pode de volta para o saguão, sua fuga foi um sucesso, porém o monstro ainda está lá",
+                "opcoes":{
+                        "inicio":"você está no saguao de entrada novamente"
+            }
+        },
+        "enfrentar o monstro":{
+                "titulo":"A luta",
+                "descricao":"Você decide enfrentar o monstro, boa sorte!!!",
+                "opcoes":{
+                        "bater":"bate no monstro",
+                        "bater forte":"bate com força no monstro",
+                        "bater muito forte":"bate com muita força no monstro"
+            }
+        },
+        "bater muito forte":{
+                "titulo":"O exagero",
+                "descricao":"você tenta bater muito forte no monstro, porém ao exagerar na força, você se desequilibra e cai, o monstro aproveita a brecha.............você morreu (D:)",
+                "opcoes":{}
+        },
+        "bater":{
+                "titulo":"A luta",
+                "descricao":"você bate no monstro e reduz levemnete a sua vida, porém o monstro te atinge e te machuca levemente",
+                "opcoes":{
+                        "bater":"bate novamente no montro",
+                        "bater com força":"bate com força no monstro"
+                        }
+        },
+        "bater forte":{
+                "titulo":"A luta",
+                "descricao":"você bate com força no monstro, tirando uma quantidade aleatoria de vida, o monstro tambem te acerta te machucando levemente",
+                "opcoes":{
+                        "bater":"bate no monstro",
+                        "bater com força":"bate com força no monstro"
+            }         
+        }       
     }        
     nome_cenario_atual = "inicio"
     return cenarios, nome_cenario_atual
@@ -107,7 +159,6 @@ def main():
             
             if escolha=='biblioteca': 
                 #print(cenarios['biblioteca'])
-                print('------------------------')
                 for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
@@ -120,9 +171,42 @@ def main():
                 for e,f  in cenarios['andar professor'].items():
                     print('opção:')
                     print(e,':',f)
-            
-       
-            
+            elif escolha=="explorar":
+                print(cenarios['explorar'])
+                for k,i in cenarios['explorar'].items():
+                    print('opção')
+                    print(k,':',i)
+                
+            elif escolha=='enfrentar o monstro':
+                monstro= True
+                life=3
+                life_monstro=5
+                print('sua vida:',life,'/','vida do monstro:',life_monstro)
+                print(cenarios['enfrentar o monstro'])
+                for a1,a2 in cenarios['enfrentar o monstro'].items():
+                         print('opção:')
+                         print(a1,':',a2)
+               #enquanto o while esta sendo usado, o print não sai corretamente
+                   
+                while monstro==True:
+                    escolha=input('digite sua opção: ')
+                    print('sua vida:',life,'/','vida do monstro:',life_monstro)
+                    print(cenarios['enfrentar o monstro'])
+                    for a1,a2 in cenarios['enfrentar o monstro'].items():
+                             print('opção:')
+                             print(a1,':',a2)
+                    if life==0:
+                        game_over= True
+                    elif escolha=='bater':
+                        life_monstro-=1
+                        life-=1
+                    elif escolha=='bater forte':
+                        life_monstro-=2
+                        life-=1
+                        print(life_monstro)
+                    else:
+                        break
+                    
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
