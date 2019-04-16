@@ -74,13 +74,18 @@ def main():
 
             # Aluno B: substitua este comentário e a linha abaixo pelo código
             # para pedir a escolha do usuário
-            escolha='biblioteca'
+            escolha='andar professor'
+            
+            
             if escolha=='biblioteca': 
                 print(cenarios['biblioteca'])
                 print('---------------------------')
                 
             elif escolha=='andar professor':
-                print(cenario_atual['andar professor'])
+                for a,b in opcoes.items():
+                    print('opção: ')
+                    print(f'{a}: {b}')
+               
             
             if escolha in opcoes:
                 nome_cenario_atual = escolha
