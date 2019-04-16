@@ -73,8 +73,8 @@ def main():
         else:
 
             # Aluno B: substitua este comentário e a linha abaixo pelo código
-            # para pedir a escolha do usuário.
-            escolha = ""
+            # para pedir a escolha do usuário
+            escolha='biblioteca'
 
             if escolha in opcoes:
                 nome_cenario_atual = escolha
@@ -86,5 +86,16 @@ def main():
 
 
 # Programa principal.
+    
 if __name__ == "__main__":
     main()
+if escolha=='biblioteca': 
+    print(cenario_atual['blibioteca'])
+    print('--------------------------------------------')
+    print(cenario_atual['biblioteca'])
+           
+elif escolha=='andar professor':
+    print(cenario_atual['andar professor'])
+                
+    
+    
