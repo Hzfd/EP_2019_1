@@ -63,9 +63,11 @@ def main():
         # o cenário atual.
         #título do cenario
         print (cenario_atual["titulo"])
-        print("--------------------------")
+        print("----------------------")
         print(cenario_atual["descricao"])
-
+        for o,p in cenario_atual['opcoes'].items():
+            print('opção:')
+            print(o,':',p)
         opcoes = cenario_atual['opcoes']
         if len(opcoes) == 0:
             print("Acabaram-se suas opções! Mwo mwo mwooooo...")
@@ -74,19 +76,22 @@ def main():
 
             # Aluno B: substitua este comentário e a linha abaixo pelo código
             # para pedir a escolha do usuário
-            escolha='andar professor'
+            escolha=input('digite sua opção: ')
             
-            
+            #cod principal:
             if escolha=='biblioteca': 
                 print(cenarios['biblioteca'])
-                print('---------------------------')
-                
+                print('------------------------')
+                for b,c in cenarios['biblioteca'].items():
+                    print('opção:')
+                    print(b,':',c)
+          
             elif escolha=='andar professor':
-                for a,b in opcoes.items():
-                    print('opção: ')
-                    print(f'{a}: {b}')
-               
-            
+                print(cenarios['andar professor'])
+                for e,f  in cenarios['andar professor'].items():
+                    print('opção:')
+                    print(e,':',f)
+
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
@@ -97,6 +102,7 @@ def main():
 
 
 # Programa principal.
+    
 if __name__ == "__main__":
     main()
         
