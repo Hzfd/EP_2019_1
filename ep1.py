@@ -33,9 +33,11 @@ def carregar_cenarios():
             "titulo": "Caverna da tranquilidade",
             "descricao": "Voce esta na biblioteca",
             "opcoes": {
-                "inicio": "Voltar para o saguao de entrada"
+                "inicio": "Voltar para o saguao de entrada",
+                
             }
         }
+            
     }
     nome_cenario_atual = "inicio"
     return cenarios, nome_cenario_atual
@@ -85,6 +87,7 @@ def main():
                 for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
+         
           
             elif escolha=='andar professor':
                 print(cenarios['andar professor'])
