@@ -34,11 +34,26 @@ def carregar_cenarios():
             "descricao": "Voce esta na biblioteca",
             "opcoes": {
                 "inicio": "Voltar para o saguao de entrada",
-                
+                "andar": "Andar pela biblioteca"
+            }
+        },
+        "andar": {
+                "titulo": "andar na biblioteca",
+                "descricao": "você está andando na biblioteca quando derrepente encontra um alçapão",
+                "opcoes":{
+                    "Inicio":"Voltar para o saguao de entrada",
+                    "entrar":"entrar no alçapão"
+            }
+        },
+        "entrar":{
+                "titulo":"alçapão",
+                "descricao": "você entra em um alçapão, é meio escuro, mas você consegue enxergar, ao explorar o alçapão você encontra uma alavanca,Puxar a alavanca?",
+                "opcoes": {
+                    "Sim":"Puxa a alavanca",
+                    "Nao":"Nao puxa a alavanca"
             }
         }
-            
-    }
+    }        
     nome_cenario_atual = "inicio"
     return cenarios, nome_cenario_atual
 
@@ -87,7 +102,6 @@ def main():
                 for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
-         
           
             elif escolha=='andar professor':
                 print(cenarios['andar professor'])
