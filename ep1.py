@@ -49,9 +49,16 @@ def carregar_cenarios():
                 "titulo":"alçapão",
                 "descricao": "você entra em um alçapão, é meio escuro, mas você consegue enxergar, ao explorar o alçapão você encontra uma alavanca,Puxar a alavanca?",
                 "opcoes": {
-                    "Sim":"Puxa a alavanca",
-                    "Nao":"Nao puxa a alavanca"
+                    "sim, puxar alavanca":"Puxa a alavanca",
+                    "nao, nao puxar a alavanca":"voltar para o inicio"
             }
+        },
+        "sim, puxar alavanca":{
+                "titulo":"você escolheu puxar a alavanca",
+                "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão, você pega a chave",
+                "opcoes":{
+                        "inicio":"voltar ao saguão de entrada"
+            }           
         }
     }        
     nome_cenario_atual = "inicio"
@@ -73,6 +80,7 @@ def main():
     cenarios, nome_cenario_atual = carregar_cenarios()
 
     game_over = False
+    inventario=[] 
     while not game_over:
         cenario_atual = cenarios[nome_cenario_atual]
 
@@ -96,19 +104,25 @@ def main():
             escolha=input('digite sua opção: ')
             
             #cod principal:
+            
             if escolha=='biblioteca': 
-                print(cenarios['biblioteca'])
+                #print(cenarios['biblioteca'])
                 print('------------------------')
                 for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
-          
+            elif escolha=="sim, puxar alavanca":
+                inventario.append('chave')
+                print(inventario)
+                
             elif escolha=='andar professor':
                 print(cenarios['andar professor'])
                 for e,f  in cenarios['andar professor'].items():
                     print('opção:')
                     print(e,':',f)
-
+            
+       
+            
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
