@@ -56,10 +56,20 @@ def carregar_cenarios():
         },
         "sim, puxar alavanca":{
                 "titulo":"você escolheu puxar a alavanca",
-                "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão, você pega a chave",
+                "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão, você pega a chave, aparentemente você pode pegar quantas chaves quiser, que legal!!!, e parece que você desbloqueoou um sistema de teletransporte, toda vez que quiser se mover rapidamente pelo mapa, basta vi aqui",
                 "opcoes":{
-                        "inicio":"voltar ao saguão de entrada"
+                        "inicio":"voltar ao saguão de entrada",
+                        "tp":"teletransporta para qualquer lugar do mapa"
             }
+        },
+        "tp":{
+                "titulo":"O teletransporte",
+                "descricao":"você desbloqueou o teletransporte, venha aqui sempre que quiser se mover rapidamente pelo mapa",
+                "opcoes":{
+                        "inicio":"voltar para o saguão de entrada",
+                        "andar professor":"ir para o andar do professor",
+                        "biblioteca":"ir para a biblioteca"
+           }             
         },
         "explorar":{
                 "titulo":"o monstro do andar",
@@ -101,7 +111,7 @@ def carregar_cenarios():
                 "descricao":"você bate no monstro e reduz levemnete a sua vida, porém o monstro te atinge e te machuca levemente",
                 "opcoes":{
                         "bater":"bate novamente no montro",
-                        "bater com força":"bate com força no monstro"
+                        "bater forte":"bate com força no monstro"
                         }
         },
         "bater forte":{
@@ -109,7 +119,7 @@ def carregar_cenarios():
                 "descricao":"você bate com força no monstro, tirando uma quantidade aleatoria de vida, o monstro tambem te acerta te machucando levemente",
                 "opcoes":{
                         "bater":"bate no monstro",
-                        "bater com força":"bate com força no monstro"
+                        "bater forte":"bate com força no monstro"
             }         
         }       
     }        
@@ -165,7 +175,6 @@ def main():
             elif escolha=="sim, puxar alavanca":
                 inventario.append('chave')
                 print(inventario)
-                
             elif escolha=='andar professor':
                 print(cenarios['andar professor'])
                 for e,f  in cenarios['andar professor'].items():
@@ -186,9 +195,17 @@ def main():
                 for a1,a2 in cenarios['enfrentar o monstro'].items():
                          print('opção:')
                          print(a1,':',a2)
-               #enquanto o while esta sendo usado, o print não sai corretamente
-                   
-                while monstro==True:
+                 #consertar o sistema de combate      
+                         ''' 
+                while life_monstro!=0:
+                    cenario_atual = cenarios[nome_cenario_atual]
+                    print (cenario_atual["titulo"])
+                    print("----------------------")
+                    print(cenario_atual["descricao"])
+                    for o,p in cenario_atual['opcoes'].items():
+                        print('opção:')
+                        print(o,':',p)
+                    opcoes = cenario_atual['opcoes']
                     escolha=input('digite sua opção: ')
                     print('sua vida:',life,'/','vida do monstro:',life_monstro)
                     print(cenarios['enfrentar o monstro'])
@@ -196,6 +213,7 @@ def main():
                              print('opção:')
                              print(a1,':',a2)
                     if life==0:
+                        print('o monstro te derrotou')
                         game_over= True
                     elif escolha=='bater':
                         life_monstro-=1
@@ -204,8 +222,10 @@ def main():
                         life_monstro-=2
                         life-=1
                         print(life_monstro)
-                    else:
-                        break
+                    elif life_monstro==0:
+                        print('você derrotou o monstro, parabens!!!')
+                        monstro==False
+                    '''
                     
             if escolha in opcoes:
                 nome_cenario_atual = escolha
