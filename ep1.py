@@ -2,8 +2,14 @@
 #
 # Alunos: 
 # - aluno A: Hélio Zaia Franciscon, heliozf@al.insper.edu.br 
-# - aluno B: Bruno Eboli, brunove@al.insper.edu.br
-
+# - aluno B: Breno Eboli, brenove@al.insper.edu.br
+#problemas:
+#sistema de combate não funciona
+#jogador pode pegar as chaves o quanto quiser
+#monstro não some depois do ataque, e não tem jeito de derrota-lo
+#inventário não está funcionando
+#fazer a parte do aluno B
+inventario=[]
 def carregar_cenarios():
     cenarios = {
         "inicio": {
@@ -50,15 +56,16 @@ def carregar_cenarios():
                 "titulo":"alçapão",
                 "descricao": "você entra em um alçapão, é meio escuro, mas você consegue enxergar, ao explorar o alçapão você encontra uma alavanca,Puxar a alavanca?",
                 "opcoes": {
-                    "sim, puxar alavanca":"Puxa a alavanca",
-                    "nao, nao puxar a alavanca":"voltar para o inicio"
+                    "puxar":"Puxa a alavanca",
+                    "nao":"voltar para o inicio"
             }
         },
         "sim, puxar alavanca":{
                 "titulo":"você escolheu puxar a alavanca",
-                "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão, você pega a chave, aparentemente você pode pegar quantas chaves quiser, que legal!!!, e parece que você desbloqueoou um sistema de teletransporte, toda vez que quiser se mover rapidamente pelo mapa, basta vi aqui",
+                "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão,aparentemente você pode pegar quantas chaves quiser, que legal!!!, e parece que você desbloqueoou um sistema de teletransporte, toda vez que quiser se mover rapidamente pelo mapa, basta vir aqui",
                 "opcoes":{
                         "inicio":"voltar ao saguão de entrada",
+                        "chave":"pega a chave que caiu no chao",
                         "tp":"teletransporta para qualquer lugar do mapa"
             }
         },
@@ -69,7 +76,13 @@ def carregar_cenarios():
                         "inicio":"voltar para o saguão de entrada",
                         "andar professor":"ir para o andar do professor",
                         "biblioteca":"ir para a biblioteca"
-           }             
+                        
+           } 
+        },
+        "Um mundo virtual":{
+                    "titulo":"Um novo mundo",
+                    "descrição":"você entrou em um mundo onde tudo pode acontecer, você assimila este mundo com o filme Matrix",
+                    "opções":{}
         },
         "explorar":{
                 "titulo":"o monstro do andar",
@@ -96,9 +109,9 @@ def carregar_cenarios():
                 "titulo":"A luta",
                 "descricao":"Você decide enfrentar o monstro, boa sorte!!!",
                 "opcoes":{
-                        "bater":"bate no monstro",
-                        "bater forte":"bate com força no monstro",
-                        "bater muito forte":"bate com muita força no monstro"
+                        "bater":"da um ataque básico no adversário",
+                        "bater forte":"ataca o adversário com mais força e alguns golpes a mais",
+                        "bater muito forte":"Usa um combo de golpes no monstro"
             }
         },
         "bater muito forte":{
@@ -124,9 +137,7 @@ def carregar_cenarios():
         }       
     }        
     nome_cenario_atual = "inicio"
-    return cenarios, nome_cenario_atual
-
-
+    return cenarios, nome_cenario_atual   
 def main():
     print("Na hora do sufoco!")
     print("------------------")
@@ -141,16 +152,14 @@ def main():
 
     cenarios, nome_cenario_atual = carregar_cenarios()
 
-    game_over = False
-    inventario=[] 
+    game_over = False 
     while not game_over:
         cenario_atual = cenarios[nome_cenario_atual]
-
         # Aluno A: substitua este comentário pelo código para imprimir 
         # o cenário atual.
         #título do cenario
         print (cenario_atual["titulo"])
-        print("----------------------")
+        print('-'*len(cenario_atual['titulo']))
         print(cenario_atual["descricao"])
         for o,p in cenario_atual['opcoes'].items():
             print('opção:')
@@ -167,12 +176,11 @@ def main():
             
             #cod principal:
             
-            if escolha=='biblioteca': 
                 #print(cenarios['biblioteca'])
-                for b,c in cenarios['biblioteca'].items():
+            for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
-            elif escolha=="sim, puxar alavanca":
+            if escolha=="sim, puxar alavanca":
                 inventario.append('chave')
                 print(inventario)
             elif escolha=='andar professor':
@@ -185,7 +193,6 @@ def main():
                 for k,i in cenarios['explorar'].items():
                     print('opção')
                     print(k,':',i)
-                
             elif escolha=='enfrentar o monstro':
                 monstro= True
                 life=3
@@ -196,11 +203,10 @@ def main():
                          print('opção:')
                          print(a1,':',a2)
                  #consertar o sistema de combate      
-                         ''' 
-                while life_monstro!=0:
-                    cenario_atual = cenarios[nome_cenario_atual]
+                cenario_atual=cenarios['enfrentar o monstro']        
+                while life_monstro>=0:
                     print (cenario_atual["titulo"])
-                    print("----------------------")
+                    print('-'*len(cenario_atual['titulo']))
                     print(cenario_atual["descricao"])
                     for o,p in cenario_atual['opcoes'].items():
                         print('opção:')
@@ -212,21 +218,21 @@ def main():
                     for a1,a2 in cenarios['enfrentar o monstro'].items():
                              print('opção:')
                              print(a1,':',a2)
-                    if life==0:
+                    if life<=0:
                         print('o monstro te derrotou')
                         game_over= True
                     elif escolha=='bater':
                         life_monstro-=1
                         life-=1
                     elif escolha=='bater forte':
-                        life_monstro-=2
+                        life_monstro-=3
                         life-=1
                         print(life_monstro)
-                    elif life_monstro==0:
+                    if life_monstro<=0:
                         print('você derrotou o monstro, parabens!!!')
-                        monstro==False
-                    '''
-                    
+                        cenarios=cenarios['inicio']
+                        break
+        
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
@@ -241,6 +247,6 @@ def main():
 if __name__ == "__main__":
     main()
         
-  print('caraio')              
+            
     
     
