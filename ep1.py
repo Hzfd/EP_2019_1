@@ -1,3 +1,4 @@
+from random import randint
 # EP 2019-1: Escape Insper
 #
 # Alunos: 
@@ -10,6 +11,10 @@
 #inventário não está funcionando
 #fazer a parte do aluno B
 inventario=[]
+nome = input("Digite o seu nome: ")
+jogador = [5, 3, 3, inventario, nome]
+nomes=["Monstro de Acrílico","Rei dos Armários","Josicreide"]
+premios=["hp","escudo"]
 def carregar_cenarios():
     cenarios = {
         "inicio": {
@@ -60,7 +65,7 @@ def carregar_cenarios():
                     "nao":"voltar para o inicio"
             }
         },
-        "sim, puxar alavanca":{
+        "puxar":{
                 "titulo":"você escolheu puxar a alavanca",
                 "descricao":"voce puxa a alavanca, escuta um barulho metalico e percebe que uma chave caiu no chão,aparentemente você pode pegar quantas chaves quiser, que legal!!!, e parece que você desbloqueoou um sistema de teletransporte, toda vez que quiser se mover rapidamente pelo mapa, basta vir aqui",
                 "opcoes":{
@@ -78,11 +83,6 @@ def carregar_cenarios():
                         "biblioteca":"ir para a biblioteca"
                         
            } 
-        },
-        "Um mundo virtual":{
-                    "titulo":"Um novo mundo",
-                    "descrição":"você entrou em um mundo onde tudo pode acontecer, você assimila este mundo com o filme Matrix",
-                    "opções":{}
         },
         "explorar":{
                 "titulo":"o monstro do andar",
@@ -105,15 +105,17 @@ def carregar_cenarios():
                         "inicio":"você está no saguao de entrada novamente"
             }
         },
+                #ALTERAR AS OPÇÕES
         "enfrentar o monstro":{
-                "titulo":"A luta",
-                "descricao":"Você decide enfrentar o monstro, boa sorte!!!",
+                "titulo":"Você ganhou!",
+                "descricao":"Você está no andar do professor",
                 "opcoes":{
                         "bater":"da um ataque básico no adversário",
                         "bater forte":"ataca o adversário com mais força e alguns golpes a mais",
                         "bater muito forte":"Usa um combo de golpes no monstro"
             }
         },
+                #ESSES CENÁRIOS DE COMBATE N EXISTEM MAIS
         "bater muito forte":{
                 "titulo":"O exagero",
                 "descricao":"você tenta bater muito forte no monstro, porém ao exagerar na força, você se desequilibra e cai, o monstro aproveita a brecha.............você morreu (D:)",
@@ -137,7 +139,53 @@ def carregar_cenarios():
         }       
     }        
     nome_cenario_atual = "inicio"
-    return cenarios, nome_cenario_atual   
+    return cenarios, nome_cenario_atual
+#codigo de sistema de combate e prêmios abaixo
+nomes=["Monstro de Acrílico","Rei dos Armários","Josicreide"]
+premios=["hp","escudo"]
+
+def combate(n_mon, v_mon, a_mon, d_mon):
+    global jogador
+    if "espada" in jogador[3]:
+        jogador[1] += 1
+    if "hp" in jogador[3]:
+        jogador[0] += 2
+    if "escudo" in jogador[3]:
+        jogador[2] += 2
+
+    print("Título: A luta contra " + n_mon + "\n")
+    while v_mon > 0 and jogador[0] > 0:
+        print("------------------------------------\n"+
+              "Nome: "+jogador[4]+"; Vida: "+str(jogador[0])
+              +"; Ataque: "+str(jogador[1])+"; Defesa: "+str(jogador[2])+"\n\n"+
+              "-------------------------------------------\n"+
+              "Nome: "+n_mon+"; Vida: "+str(v_mon)
+              +"; Ataque: "+str(a_mon)+"; Defesa: "+str(d_mon)+"\n\n"+
+              "opções:\n"+"1 - atacar\n2 - Defender")
+        opcao=(input(">> "))
+        if opcao=='1':
+            dano= jogador[1]-d_mon
+            if dano<0:
+                dano=0
+            v_mon-=dano
+            dano=a_mon-jogador[2]
+            if dano<0:
+                dano=0
+            jogador[0]-=dano
+        elif opcao=="2":
+            dano=a_mon-(jogador[1]+jogador[2])
+            if dano<0:
+                dano=0
+            jogador[0]-=dano
+    if v_mon<=0:
+        print("você venceu, parabéns")
+        p = premios[randint(0,len(premios)-1)]
+        inventario.append(p)
+        print("Você ganhou " + p)
+        return True
+    else:
+        return False
+
 def main():
     print("Na hora do sufoco!")
     print("------------------")
@@ -194,7 +242,11 @@ def main():
                     print('opção')
                     print(k,':',i)
             elif escolha=='enfrentar o monstro':
-                monstro= True
+                mon = nomes[randint(0,len(nomes)-1)]
+                resultado = combate(mon,randint(1,3),randint(1,3),randint(1,jogador[1]-1))
+                if not resultado:
+                    game_over = True
+                '''monstro= True
                 life=3
                 life_monstro=5
                 print('sua vida:',life,'/','vida do monstro:',life_monstro)
@@ -231,8 +283,8 @@ def main():
                     if life_monstro<=0:
                         print('você derrotou o monstro, parabens!!!')
                         cenarios=cenarios['inicio']
-                        break
-        
+                        break'''
+            
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
