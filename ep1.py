@@ -95,7 +95,7 @@ def carregar_cenarios():
         },
         "pular da janela":{
                 "titulo":"você decidiu pular da janela",
-                "descricao":"você corre, passa pelo monstro e pula da janela numa tentativa de se salvar, porém a queda, apesar de pequena, foi fatal",
+                "descricao":"você corre e pula da janela a queda, apesar de pequena, foi fatal",
                 "opcoes":{}       
         },
         "correr de volta para o saguão":{
@@ -105,43 +105,70 @@ def carregar_cenarios():
                         "inicio":"você está no saguao de entrada novamente"
             }
         },
-                #ALTERAR AS OPÇÕES
         "enfrentar o monstro":{
-                "titulo":"Você ganhou!",
-                "descricao":"Você está no andar do professor",
+                "titulo":"O monstro do andar",
+                "descricao":"Você derrotou o monstro, PARABENS!!!",
                 "opcoes":{
-                        "bater":"da um ataque básico no adversário",
-                        "bater forte":"ataca o adversário com mais força e alguns golpes a mais",
-                        "bater muito forte":"Usa um combo de golpes no monstro"
+                        "inicio":"volta para o saguão de  entrada",
+                        "continuar a explorar":"agora que o mosntro ja se foi, por enquanto, você pode explorar mais o andar",
+                        "pular da janela":"não parece uma boa ideia"
+            }         
+        },
+        "continuar a explorar":{
+                "titulo":"O Armario misterioso",
+                "descricao":"você eliminou o monstro temporariamente, ao continuar explorando o andar, encontrou um armario fora do normal, o que pode haver dentro dele?",
+                "opcoes":{
+                        "abrir o armario":"você tenta abrir o armario",
+                        "inicio":"volta ao saguão de entrada, porém o monstro resurge"
             }
         },
-                #ESSES CENÁRIOS DE COMBATE N EXISTEM MAIS
-        "bater muito forte":{
-                "titulo":"O exagero",
-                "descricao":"você tenta bater muito forte no monstro, porém ao exagerar na força, você se desequilibra e cai, o monstro aproveita a brecha.............você morreu (D:)",
-                "opcoes":{}
-        },
-        "bater":{
-                "titulo":"A luta",
-                "descricao":"você bate no monstro e reduz levemnete a sua vida, porém o monstro te atinge e te machuca levemente",
+        "abrir o armario":{
+                "titulo":"o armario misterioso",
+                "descricao":"você encontrou um armario meio estranho, o que ele pode conter?",
                 "opcoes":{
-                        "bater":"bate novamente no montro",
-                        "bater forte":"bate com força no monstro"
-                        }
+                        "tentar abrir o armario":"voce tenta abrir o armario",
+                        "inicio":"voltar ao saguão de entrada"
+            }
         },
-        "bater forte":{
-                "titulo":"A luta",
-                "descricao":"você bate com força no monstro, tirando uma quantidade aleatoria de vida, o monstro tambem te acerta te machucando levemente",
+        "tentar abrir o armario":{
+                "titulo":"O armario misterioso",
+                "descricao":"você tenta abrir o armario, porém uma chave é necessaria",
                 "opcoes":{
-                        "bater":"bate no monstro",
-                        "bater forte":"bate com força no monstro"
-            }         
-        }       
+                        "inicio":"voltar ao inicio"
+           }
+       },
+       "dar o laptop":{
+               "titulo":"A barganha",
+               "descricao":"você conversa com o professor Toshi e barganha com ele, ao dar o laptop do ben 10 para ele você nota que ele fica extremamente feliz, e aproveitando desse momento de euforia do professor, você o convence a mudar a data de entrega do ep, meus parabéns você conseguiu!!!!",
+               "opcoes":{
+                       "ir pra casa fazer o ep":"você vai pra casa fazer o ep para acabar o quanto antes e conseguir entregar no prazo"
+           }
+       },
+       "ir pra casa fazer o ep":{
+               "titulo":"O ep",
+               "descricao":"você foi para susa casa e se empenhou em fazer o ep",
+               "opcoes":{
+                       "fazer o ep":"faz o ep pra entregar em dia dessa vez"
+           }
+       },
+       "falar com o professor":{
+                        "titulo":"O professor",
+                        "descricao":"O professor Toshi está calmo na sala dele, melhor não irrita-lo falando de adiar o ep, a não ser que você tenha algo para barganhar",
+                        "opcoes":{
+                                "dar o laptop":"você da o laptop do ben 10 pro professor na esperança de que com isso ele adie o ep",
+                                "desistir":"desiste da ideia e volta para o saguão, sabendo que não terá tempo de acabar o ep, a derrota é certa"
+             }
+       },
+       "desistir":{
+               "titulo":"O sem esperança",
+               "descricao":"você desistiu de tentar barganhar com o professor, foi para casa e n entregou o ep, você perdeu",
+               "opcoes":{}
+       }
     }        
     nome_cenario_atual = "inicio"
     return cenarios, nome_cenario_atual
 #codigo de sistema de combate e prêmios abaixo
-nomes=["Monstro de Acrílico","Rei dos Armários","Josicreide"]
+nomes=["Monstro de Acrílico","Rei dos Armários","Vergs, o terrível"]
 premios=["hp","escudo"]
 
 def combate(n_mon, v_mon, a_mon, d_mon):
@@ -228,7 +255,7 @@ def main():
             for b,c in cenarios['biblioteca'].items():
                     print('opção:')
                     print(b,':',c)
-            if escolha=="sim, puxar alavanca":
+            if escolha=="puxar":
                 inventario.append('chave')
                 print(inventario)
             elif escolha=='andar professor':
@@ -241,57 +268,32 @@ def main():
                 for k,i in cenarios['explorar'].items():
                     print('opção')
                     print(k,':',i)
+            elif escolha=="abrir o armario":
+                inventario.append("leptop do ben 10")
+                print("inventario:",inventario)
             elif escolha=='enfrentar o monstro':
                 mon = nomes[randint(0,len(nomes)-1)]
                 resultado = combate(mon,randint(1,3),randint(1,3),randint(1,jogador[1]-1))
                 if not resultado:
                     game_over = True
-                '''monstro= True
-                life=3
-                life_monstro=5
-                print('sua vida:',life,'/','vida do monstro:',life_monstro)
-                print(cenarios['enfrentar o monstro'])
-                for a1,a2 in cenarios['enfrentar o monstro'].items():
-                         print('opção:')
-                         print(a1,':',a2)
-                 #consertar o sistema de combate      
-                cenario_atual=cenarios['enfrentar o monstro']        
-                while life_monstro>=0:
-                    print (cenario_atual["titulo"])
-                    print('-'*len(cenario_atual['titulo']))
-                    print(cenario_atual["descricao"])
-                    for o,p in cenario_atual['opcoes'].items():
-                        print('opção:')
-                        print(o,':',p)
-                    opcoes = cenario_atual['opcoes']
-                    escolha=input('digite sua opção: ')
-                    print('sua vida:',life,'/','vida do monstro:',life_monstro)
-                    print(cenarios['enfrentar o monstro'])
-                    for a1,a2 in cenarios['enfrentar o monstro'].items():
-                             print('opção:')
-                             print(a1,':',a2)
-                    if life<=0:
-                        print('o monstro te derrotou')
-                        game_over= True
-                    elif escolha=='bater':
-                        life_monstro-=1
-                        life-=1
-                    elif escolha=='bater forte':
-                        life_monstro-=3
-                        life-=1
-                        print(life_monstro)
-                    if life_monstro<=0:
-                        print('você derrotou o monstro, parabens!!!')
-                        cenarios=cenarios['inicio']
-                        break'''
-            
+            elif "chave" in inventario:
+                cenarios["abrir o armario"]={
+                "titulo":"O armario misterioso",
+                "descricao":"Você decide abrir o armario,usando a chave encontrada na bilbioteca. Ao abrir você encontra um item, aparentemente um laptop do ben 10, o que isso estaria fazendo ali?",
+                "opcoes":{
+                        "falar com o professor":"você vai até a sala do professor tentar barganhar com ele"
+                        }
+                }
+                print("inventario:",inventario)
+            if escolha=="fazer o ep":
+                print("você faz o ep e entrega na data, VOCÊ CONSEGUIU!!!!")
+                break
             if escolha in opcoes:
                 nome_cenario_atual = escolha
             else:
                 print("Sua indecisão foi sua ruína!")
                 game_over = True
-
-    print("Você morreu!")
+                print("Você morreu!")
 
 
 # Programa principal.
