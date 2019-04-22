@@ -62,7 +62,7 @@ def carregar_cenarios():
                 "descricao": "você entra em um alçapão, é meio escuro, mas você consegue enxergar, ao explorar o alçapão você encontra uma alavanca,Puxar a alavanca?",
                 "opcoes": {
                     "puxar":"Puxa a alavanca",
-                    "nao":"voltar para o inicio"
+                    "inicio":"voltar para o inicio"
             }
         },
         "puxar":{
